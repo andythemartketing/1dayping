@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Subscription state
+  emailsSent        Int      @default(0)
+  hasSubscribed     Boolean  @default(false)
+  subscriptionId    String?  @unique
+  stripeCustomerId  String?  @unique
+
+  // Email course state
+  lastEmailSentAt   DateTime?
+  nextEmailAt       DateTime?
+  isCancelled       Boolean  @default(false)
+
+  magicLinks        MagicLink[]
+  emails            EmailLog[]
+
+  @@index([email])
+  @@index([nextEmailAt])
+}
+
+model MagicLink {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+model EmailLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emailNumber Int
+  sentAt      DateTime @default(now())
+  subject     String
+  status      String   @default("sent")
+
+  @@index([userId])
+  @@index([sentAt])
+}
