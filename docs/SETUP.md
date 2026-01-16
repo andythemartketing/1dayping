@@ -52,11 +52,19 @@ npm run prisma:studio
 - Setup webhook endpoint: `http://localhost:3000/api/webhooks/stripe`
 - Add webhook events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`
 
-5. **Configure SendGrid**
+5. **Configure SendGrid (or Gmail SMTP)**
 
+**Option A: SendGrid (Recommended)**
 - Verify sender email address
 - Create API key with full access
-- (Optional) Setup email templates
+- Add `SENDGRID_API_KEY` and `FROM_EMAIL` to `.env`
+
+**Option B: Gmail via SendGrid**
+- Use your Gmail as `FROM_EMAIL`
+- SendGrid will send from your domain but you'll need verified sender
+- For development, SendGrid free tier works well
+
+**Note:** Direct Gmail SMTP integration requires additional setup. SendGrid is recommended for production.
 
 ## Running Locally
 
