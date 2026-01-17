@@ -29,6 +29,7 @@ Visit http://localhost:3000
 - [Quick Start Guide](./docs/QUICK_START.md) - Get running in 5 minutes
 - [Project Overview](./docs/README.md) - Architecture and business rules
 - [Setup Guide](./docs/SETUP.md) - Full production setup
+- [Railway Deployment](./docs/RAILWAY_DEPLOY.md) - **Deploy to production** 🚀
 - [Authentication](./docs/AUTH.md) - Magic link implementation
 - [Features](./docs/FEATURES.md) - Complete feature documentation
 - [Testing](./docs/TESTING.md) - Testing and troubleshooting
