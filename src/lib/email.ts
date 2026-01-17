@@ -41,7 +41,8 @@ export async function sendCourseEmail(
   to: string,
   emailNumber: number,
   subject: string,
-  content: string
+  content: string,
+  checkoutUrl?: string
 ) {
   const msg = {
     to,
@@ -56,11 +57,19 @@ export async function sendCourseEmail(
         <div style="line-height: 1.6;">
           ${content.replace(/\n/g, '<br>')}
         </div>
-        ${emailNumber <= 6 ? '' : `
+        ${emailNumber === 7 && checkoutUrl ? `
+          <div style="margin-top: 30px;">
+            <a href="${checkoutUrl}"
+               style="background-color: #000; color: #fff; padding: 14px 28px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: 600;">
+              Subscribe to Continue
+            </a>
+          </div>
+        ` : ''}
+        ${emailNumber > 7 ? `
           <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
             <p>Manage your subscription in your <a href="${process.env.NEXTAUTH_URL}/dashboard">dashboard</a>.</p>
           </div>
-        `}
+        ` : ''}
       </div>
     `,
   }

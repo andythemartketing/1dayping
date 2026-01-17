@@ -1,13 +1,23 @@
 import { getSession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import LogoutButton from '@/components/LogoutButton'
+import SubscribeButton from '@/components/SubscribeButton'
+import CancelButton from '@/components/CancelButton'
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ success?: string; canceled?: string }>
+}) {
   const user = await getSession()
+  const params = await searchParams
 
   if (!user) {
     redirect('/login')
   }
+
+  const showSuccess = params.success === 'true'
+  const showCanceled = params.canceled === 'true'
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -21,6 +31,22 @@ export default async function DashboardPage() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {showSuccess && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-green-800 font-medium">
+              Subscription activated! Your daily emails will resume tomorrow.
+            </p>
+          </div>
+        )}
+
+        {showCanceled && (
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-yellow-800">
+              Checkout was cancelled. You can subscribe anytime from this dashboard.
+            </p>
+          </div>
+        )}
+
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
 
@@ -31,19 +57,21 @@ export default async function DashboardPage() {
             </div>
 
             <div>
-              <p className="text-sm text-gray-600">Emails Sent</p>
-              <p className="font-medium">{user.emailsSent} of ∞</p>
+              <p className="text-sm text-gray-600">Emails Received</p>
+              <p className="font-medium">{user.emailsSent} emails</p>
             </div>
 
             <div>
               <p className="text-sm text-gray-600">Subscription Status</p>
               <p className="font-medium">
                 {user.emailsSent < 7 ? (
-                  <span className="text-green-600">Free Trial ({6 - user.emailsSent} free emails remaining)</span>
+                  <span className="text-green-600">
+                    Free Trial ({6 - user.emailsSent} emails remaining)
+                  </span>
                 ) : user.hasSubscribed ? (
-                  <span className="text-green-600">Active</span>
+                  <span className="text-green-600">Active Subscriber</span>
                 ) : (
-                  <span className="text-amber-600">Trial Ended - Subscribe to Continue</span>
+                  <span className="text-amber-600">Trial Ended</span>
                 )}
               </p>
             </div>
@@ -62,24 +90,41 @@ export default async function DashboardPage() {
               <div className="p-4 bg-red-50 border border-red-200 rounded">
                 <p className="text-red-700 font-medium">Subscription Cancelled</p>
                 <p className="text-sm text-red-600 mt-1">
-                  No more emails will be sent
+                  No more emails will be sent.
                 </p>
               </div>
             )}
           </div>
 
+          {/* Subscription CTA for users who finished trial but haven't subscribed */}
+          {user.emailsSent >= 7 && !user.hasSubscribed && !user.isCancelled && (
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-lg font-semibold mb-2">Continue Your Journey</h3>
+              <p className="text-gray-600 mb-4">
+                You've completed the free trial. Subscribe to continue receiving daily lessons.
+              </p>
+              <SubscribeButton />
+            </div>
+          )}
+
+          {/* Subscription management for active subscribers */}
           {user.hasSubscribed && !user.isCancelled && (
             <div className="mt-6 pt-6 border-t border-gray-200">
               <h3 className="text-lg font-semibold mb-3">Subscription Management</h3>
               <p className="text-sm text-gray-600 mb-4">
-                Manage your subscription settings
+                Cancel your subscription anytime. You'll stop receiving daily emails.
               </p>
-              <button
-                className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 text-sm"
-                onClick={() => alert('Cancel functionality coming soon')}
-              >
-                Cancel Subscription
-              </button>
+              <CancelButton />
+            </div>
+          )}
+
+          {/* Info for active trial users */}
+          {user.emailsSent < 7 && (
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <h3 className="text-lg font-semibold mb-2">Your Free Trial</h3>
+              <p className="text-sm text-gray-600">
+                You're receiving free daily emails. After email 6, you'll receive a special offer to continue.
+              </p>
             </div>
           )}
         </div>
