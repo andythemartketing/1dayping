@@ -14,21 +14,19 @@ model User {
   updatedAt         DateTime @updatedAt
 
   // Subscription state
-  emailsSent        Int      @default(0)
   hasSubscribed     Boolean  @default(false)
   subscriptionId    String?  @unique
   stripeCustomerId  String?  @unique
+  subscribedAt      DateTime?
 
-  // Email course state
-  lastEmailSentAt   DateTime?
-  nextEmailAt       DateTime?
-  isCancelled       Boolean  @default(false)
+  // Onboarding
+  onboardingComplete Boolean  @default(false)
 
+  // Relations
   magicLinks        MagicLink[]
-  emails            EmailLog[]
+  goals             Goal[]
 
   @@index([email])
-  @@index([nextEmailAt])
 }
 
 model MagicLink {
@@ -43,15 +41,65 @@ model MagicLink {
   @@index([userId])
 }
 
-model EmailLog {
+model Goal {
   id          String   @id @default(cuid())
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  emailNumber Int
-  sentAt      DateTime @default(now())
-  subject     String
-  status      String   @default("sent")
+
+  // Goal details
+  category    String   // Health, Relationships, Career, Money, Business, Learning, Productivity, Creativity
+  goalText    String   // User's custom goal
+  stage       String   // Just started, Intermediate, Advanced
+
+  // Status
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  completedAt DateTime?
+  cancelledAt DateTime?
+
+  // Relations
+  emailPlan   EmailPlan?
 
   @@index([userId])
+  @@index([isActive])
+}
+
+model EmailPlan {
+  id          String   @id @default(cuid())
+  goalId      String   @unique
+  goal        Goal     @relation(fields: [goalId], references: [id], onDelete: Cascade)
+
+  // Plan metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  emails      Email[]
+
+  @@index([goalId])
+}
+
+model Email {
+  id          String   @id @default(cuid())
+  planId      String
+  plan        EmailPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+
+  // Email details
+  dayNumber   Int      // 1-14
+  subject     String
+  content     String   // Full content
+  preview     String   // Short preview for paywall
+
+  // Delivery status
+  sentAt      DateTime?
+  status      String   @default("pending") // pending, sent, failed
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([planId])
+  @@index([dayNumber])
   @@index([sentAt])
+  @@unique([planId, dayNumber])
 }

@@ -11,7 +11,6 @@ export async function generateMagicLink(email: string): Promise<string> {
     user = await prisma.user.create({
       data: {
         email,
-        nextEmailAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
       },
     })
   }

@@ -7,7 +7,7 @@ export function getEmailContent(emailNumber: number): EmailContent {
   const emails: Record<number, EmailContent> = {
     1: {
       subject: 'Welcome to Your Learning Journey',
-      content: `Welcome to Roude!
+      content: `Welcome to 1dayping!
 
 This is your first email in a transformative learning journey.
 

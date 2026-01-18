@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Roude - Email Course Platform',
+  title: '1dayping - Email Course Platform',
   description: 'Daily email courses with seamless subscription management',
 }
 
