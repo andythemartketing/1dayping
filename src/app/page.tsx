@@ -80,16 +80,16 @@ export default function Home() {
           <div className="flex flex-col items-center gap-6 text-center sm:gap-12">
             <Badge variant="outline" className="animate-appear">
               <span className="text-muted-foreground">
-                Email-first goal reminders
+                Your daily partner for small steps to big goals
               </span>
             </Badge>
 
             <h1 className="animate-appear text-4xl leading-tight font-semibold text-balance opacity-0 delay-100 sm:text-6xl sm:leading-tight md:text-7xl md:leading-tight">
-              Personalized Daily Goal Reminders — Delivered by Email
+              A Partner That Helps You Take Small Steps — Every Single Day
             </h1>
 
             <p className="text-md animate-appear text-muted-foreground max-w-[740px] font-medium text-balance opacity-0 delay-300 sm:text-xl">
-              Set one goal. Get one email a day. A quiet partner that keeps you connected to what you care about — with soft reminders, helpful prompts, and small next steps.
+              Set one goal. Get one email a day. Your partner collects ideas, advice, and tiny actionable steps while you sleep or procrastinate — so you always have something to move forward with.
             </p>
 
             <div className="animate-appear flex flex-col gap-4 opacity-0 delay-500 sm:flex-row">
@@ -160,8 +160,8 @@ export default function Home() {
               <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
                 <CheckIcon className="w-6 h-6 text-green-600" />
               </div>
-              <h3 className="font-semibold mb-2">Daily touchpoint works</h3>
-              <p className="text-sm text-muted-foreground">A consistent signal that pulls you back to your intention — gently, daily, without drama.</p>
+              <h3 className="font-semibold mb-2">Tiny steps compound</h3>
+              <p className="text-sm text-muted-foreground">Even just reading an email about your goal is a step forward. You're already doing great — your partner helps you keep going.</p>
             </div>
           </div>
         </div>
@@ -218,10 +218,10 @@ export default function Home() {
       <Section className="bg-muted/30">
         <div className="max-w-container mx-auto">
           <h2 className="text-center text-3xl leading-tight font-semibold mb-4 sm:text-5xl sm:leading-tight">
-            What makes it work
+            Built on proven small-step methods
           </h2>
           <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Each email is built for you based on your goal, category, and level
+            Based on research about consistent, incremental progress — even just reading about your goal counts as a step forward. You're already winning.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -253,9 +253,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <ZapIcon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Actionable, not overwhelming</h3>
+              <h3 className="text-xl font-semibold mb-3">Tiny steps you can always take</h3>
               <p className="text-muted-foreground mb-4">
-                Micro-actions you can do in 5–15 minutes. Plus a softer option for low-energy days.
+                Your partner collects micro-actions while you go about your day. Even just reading the email is progress — you're keeping your goal alive.
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
@@ -301,9 +301,9 @@ export default function Home() {
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                 <HeartIcon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">Like a calm partner</h3>
+              <h3 className="text-xl font-semibold mb-3">Your caring partner</h3>
               <p className="text-muted-foreground mb-4">
-                No loud motivation. No "hustle" energy. Just a daily reminder that your goal still matters.
+                No loud motivation. No "hustle" energy. Just a partner that works for you daily — collecting ideas and steps while you live your life.
               </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
@@ -449,8 +449,38 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* Science Section */}
+      <Section className="bg-muted/30">
+        <div className="max-w-container mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-3xl leading-tight font-semibold mb-6 sm:text-5xl sm:leading-tight">
+              Why small steps actually work
+            </h2>
+            <div className="glass-4 rounded-2xl p-8 border border-border text-left space-y-6">
+              <p className="text-lg text-muted-foreground">
+                This approach is grounded in behavioral science and proven methods like <strong>atomic habits</strong>, <strong>micro-progress</strong>, and <strong>implementation intentions</strong>.
+              </p>
+              <p className="text-muted-foreground">
+                The secret? <strong>Consistency beats intensity.</strong> Your brain builds neural pathways through repetition, not through one-time heroic efforts.
+              </p>
+              <p className="text-muted-foreground">
+                Even just <strong>reading an email about your goal</strong> is a micro-step. You're priming your brain, keeping the goal active, reinforcing your intention. You're already making progress — even when it feels like you did "nothing."
+              </p>
+              <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 mt-6">
+                <p className="text-sm font-medium text-primary mb-2">💡 The research shows:</p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li>✓ Daily touchpoints create lasting behavior change</li>
+                  <li>✓ Minimal friction = maximum consistency</li>
+                  <li>✓ Mental rehearsal (like reading about your goal) improves follow-through</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
       {/* Get Started Form */}
-      <Section id="get-started" className="group relative overflow-hidden bg-muted/30">
+      <Section id="get-started" className="group relative overflow-hidden bg-background">
         <div className="max-w-container relative z-10 mx-auto">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
@@ -599,7 +629,7 @@ export default function Home() {
             </div>
 
             <p className="text-center text-sm text-muted-foreground mt-6">
-              Your first email arrives tomorrow morning
+              Your first email arrives tomorrow morning. Your partner starts working for you right away.
             </p>
           </div>
         </div>
